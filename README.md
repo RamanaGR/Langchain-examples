@@ -2,6 +2,8 @@
 
 Modular, runnable Python examples for LangChain topics. Uses **OpenAI** models only.
 
+> **Setup:** Copy `.env.example` to `.env` and add your `OPENAI_API_KEY`. Never commit `.env`.
+
 ## Setup
 
 1. **Create virtual environment (recommended)**
