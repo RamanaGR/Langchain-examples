@@ -41,7 +41,6 @@ Modular, runnable Python examples for LangChain topics. Uses **OpenAI** models o
 | `03_rag_pipeline.py` | RAG with RecursiveCharacterTextSplitter, OpenAI Embeddings, Pinecone |
 | `04_agents.py` | Zero-shot ReAct agent with LLMMath tool |
 | `05_lcel_basics.py` | Pipe operator, RunnablePassthrough, RunnableLambda |
-| `06_lcel_advanced.py` | RunnableParallel, RunnablePassthrough.assign |
 
 ## Run
 
@@ -51,7 +50,6 @@ python 02_memory_types.py
 python 03_rag_pipeline.py   # needs Pinecone index
 python 04_agents.py
 python 05_lcel_basics.py
-python 06_lcel_advanced.py
 ```
 
 ## Pinecone (03_rag_pipeline.py)
