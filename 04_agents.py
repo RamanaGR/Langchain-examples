@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langchain_classic.agents import AgentExecutor, create_react_agent
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import Tool
@@ -98,7 +98,7 @@ Thought: {agent_scratchpad}
 
 def create_agent():
     """Create a zero-shot ReAct agent with LLMMath tool."""
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     tools = get_tools(llm)
     
     prompt = PromptTemplate.from_template(REACT_PROMPT)

@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langchain_classic.chains import ConversationChain
 from langchain_classic.memory import (
     ConversationBufferMemory,
@@ -29,7 +29,7 @@ from langchain_classic.memory import (
 
 def demo_buffer_memory():
     """Full conversation history stored in memory."""
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     
     memory = ConversationBufferMemory(
         return_messages=True,  # Return as message objects (for chat models)
@@ -54,7 +54,7 @@ def demo_buffer_memory():
 
 def demo_window_memory():
     """Sliding window of last k interactions."""
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     
     memory = ConversationBufferWindowMemory(
         k=3,  # Keep only last 2 exchanges; older ones are forgotten
@@ -81,7 +81,7 @@ def demo_window_memory():
 
 def demo_summary_memory():
     """Summarizes conversation history to save tokens."""
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     
     memory = ConversationSummaryMemory(
         llm=llm,  # Same LLM used to generate summaries

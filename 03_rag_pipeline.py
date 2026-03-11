@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_ollama import ChatOllama, OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
@@ -62,7 +62,7 @@ def build_rag_chain(vectorstore):
     Answer:"""
     
     prompt = ChatPromptTemplate.from_template(template)
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     
     def format_docs(docs):
         return "\n\n".join(doc.page_content for doc in docs)
@@ -105,7 +105,7 @@ def index_documents(index_name: str = "langchain-demo"):
     for i, c in enumerate(chunks):
         print(f"  [{i+1}] {c.page_content}")
     
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    embeddings = OllamaEmbeddings(model="nomic-embed-text")
     
     # Print one embedding (first chunk)
     one_embedding = embeddings.embed_query(chunks[0].page_content)
@@ -142,21 +142,13 @@ def run_rag_query(chain, question: str):
 
 
 if __name__ == "__main__":
-    if not os.getenv("OPENAI_API_KEY"):
-        print("OPENAI_API_KEY not set. Add it to .env to run the RAG pipeline.")
-        print("\nChunking demo (no API key):")
-        splitter = create_text_splitter(chunk_size=100, chunk_overlap=20)
-        doc = Document(page_content="LangChain is great. RAG is useful. Embeddings matter. Chunking helps.")
-        chunks = splitter.split_documents([doc])
-        for i, c in enumerate(chunks):
-            print(f"  Chunk {i+1}: {c.page_content[:80]}...")
-    else:
-        index = os.getenv("PINECONE_INDEX_NAME", "langchain-demo")
-        print("Indexing sample documents...")
-        vectorstore = index_documents(index)
-        print("\nBuilding RAG chain...")
-        chain = build_rag_chain(vectorstore)
-        print("\nQuerying: What is RAG?")
-        answer = run_rag_query(chain, "What is RAG?")
-        print(f"Answer: {answer}")
+    # Ollama runs locally - no API key. Ensure: ollama pull llama3.2 && ollama pull nomic-embed-text
+    index = os.getenv("PINECONE_INDEX_NAME", "langchain-demo")
+    print("Indexing sample documents...")
+    vectorstore = index_documents(index)
+    print("\nBuilding RAG chain...")
+    chain = build_rag_chain(vectorstore)
+    print("\nQuerying: What is RAG?")
+    answer = run_rag_query(chain, "What is RAG?")
+    print(f"Answer: {answer}")
     print("\nDone.")
