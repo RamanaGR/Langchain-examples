@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableLambda,RunnableParallel
@@ -29,7 +29,7 @@ def demo_pipe_operator():
         ("system", "You are a concise assistant."),
         ("human", "{question}"),
     ])
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     parser = StrOutputParser()
     question = "What is 2 + 2? Reply in one word."
 
@@ -74,7 +74,7 @@ def demo_custom_runnable():
         return text.split("\n")[0] if text else ""
     
     prompt = ChatPromptTemplate.from_template("List 3 colors. One per line.")
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     parser = StrOutputParser()
     
     chain = (
@@ -97,7 +97,7 @@ def demo_custom_runnable():
 def demo_runnable_parallel():
     """Run multiple prompt+LLM branches in parallel and merge results."""
     
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     parser = StrOutputParser()
     
     prompt_summary = ChatPromptTemplate.from_template("Summarize in one sentence: {text}")

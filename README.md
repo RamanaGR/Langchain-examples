@@ -1,36 +1,32 @@
 # LangChain Examples
 
-Modular, runnable Python examples for LangChain topics. Uses **OpenAI** models only.
-
-> **Setup:** Copy `.env.example` to `.env` and add your `OPENAI_API_KEY`. Never commit `.env`.
+Modular, runnable Python examples for LangChain topics. Uses **Ollama** (local LLM, no API key).
 
 ## Setup
 
-1. **Create virtual environment (recommended)**
+1. **Install and run Ollama** ([ollama.com](https://ollama.com))
+
+   ```bash
+   ollama pull llama3.2
+   ollama pull nomic-embed-text   # for RAG embeddings in 03_rag_pipeline.py
+   ```
+
+2. **Create virtual environment (recommended)**
 
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-2. **Install dependencies**
+3. **Install dependencies**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Configure environment**
+4. **Optional – `.env` for Pinecone** (only if using Pinecone in 03)
 
-   Copy `.env.example` to `.env` and add your keys:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-   Required in `.env`:
-
-   - `OPENAI_API_KEY` – for all scripts
-   - `PINECONE_API_KEY` – for `03_rag_pipeline.py` only
+   Copy `.env.example` to `.env` and add `PINECONE_API_KEY` if needed.
 
 ## Files
 
@@ -54,9 +50,4 @@ python 05_lcel_basics.py
 
 ## Pinecone (03_rag_pipeline.py)
 
-Create a Pinecone index with:
-
-- Dimensions: `1536` (for `text-embedding-3-small`)
-- Metric: `cosine`
-
-Or set `PINECONE_INDEX_NAME` in `.env` to match your index name.
+Uses FAISS by default (in-memory). For Pinecone: create an index with dimensions matching your embedding model (e.g. 768 for `nomic-embed-text`), set `PINECONE_API_KEY` and `PINECONE_INDEX_NAME` in `.env`.

@@ -2,7 +2,7 @@
 01 - Prompt Templates
 =====================
 Demonstrates PromptTemplate and FewShotPromptTemplate for structured LLM inputs.
-Uses OpenAI via langchain_openai.
+Uses Ollama (local) via langchain_ollama.
 """
 
 import os
@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 
 # -----------------------------------------------------------------------------
 # 1. Basic PromptTemplate
@@ -46,7 +46,7 @@ def demo_prompt_template():
     print(formatted)
     
     # Invoke LLM with the formatted prompt
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     response = llm.invoke(formatted1)
     print("\n=== LLM Response ===")
     print(response.content)
@@ -91,7 +91,7 @@ def demo_few_shot_template():
     print(formatted)
     
     # Invoke LLM
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOllama(model="llama3.2", temperature=0)
     response = llm.invoke(formatted)
     print("\n=== Classification Result ===")
     print(response.content)
